@@ -1,0 +1,21 @@
+{
+    "name": "brackets-docco",
+    "title": "Docco",
+    "version": "1.0.0",
+    "description": "Runs Docco (documentation generator) on a js file.",
+    "homepage": "https://github.com/aghiura/brackets-docco",
+    "author": "Alexandru Ghiura ghalex@gmail.com (https://github.com/ghalex)",
+    "license": "MIT",
+    "categories":"general",
+    "keywords": [
+        "documentation"
+    ],
+    "files": [
+        "node/DoccoDomain.js",
+        "main.js",
+        "README.md"
+    ],
+    "engines": {
+        "brackets": ">=0.22.0"
+    }
+}
