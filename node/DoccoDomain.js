@@ -10,11 +10,13 @@
     
     function runDocco(file, output) {
 		
-		console.log("Running Docco, please wait...");
 		
-		var cmd = 'docco ' + file.fullPath + ' -o ' + output.fullPath + '/docs/',
+		var cmd = 'docco ' + file.fullPath + ' -o ' + output.fullPath + 'docs/',
 			docco = exec(cmd);
 		
+		console.log("Running Docco, please wait...");
+        console.log(cmd);
+        
 		docco.stdout.on('data', function (data) {
 			output += data;
 		});
