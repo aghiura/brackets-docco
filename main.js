@@ -12,9 +12,11 @@ define(function (require, exports, module) {
         Menus               = brackets.getModule("command/Menus"),
         NativeFileSystem    = brackets.getModule("file/NativeFileSystem"),
         NodeConnection      = brackets.getModule("utils/NodeConnection"),
+		NodeDomain			= brackets.getModule("utils/NodeDomain"),
         ProjectManager      = brackets.getModule("project/ProjectManager");
     
-    var nodeConnection;
+    var nodeConnection,
+		domain = new NodeDomain('docco', ExtensionUtils.getModulePath(module, "node/DoccoDomain"));
     
     var contextMenu     = Menus.getContextMenu(Menus.ContextMenuIds.PROJECT_MENU),
 		selectedEntry	= null,
@@ -37,11 +39,12 @@ define(function (require, exports, module) {
 	
 	function runHandler() {
 		
-		nodeConnection.domains.docco.runDocco(selectedEntry, ProjectManager.getProjectRoot())
+		domain.exec("runDocco", selectedEntry.fullPath, ProjectManager.getProjectRoot().fullPath)
 			.fail(function (err) {
 				console.error("[brackets-docco] failed to run docco", err);
 			})
 			.done(function (result) {
+				console.log("[brackets-docco] done.");
 			});
 	}
     
@@ -74,6 +77,10 @@ define(function (require, exports, module) {
         
         $(nodeConnection).on("docco.complete", function (evt, data) {
             console.log("Docco command complete with success.");
+        });
+		
+		$(nodeConnection).on("docco.failed", function (evt, data) {
+            console.log("Docco command failed.");
         });
 
         chain(connect, loadDoccoDomain);

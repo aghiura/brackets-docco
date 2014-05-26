@@ -8,25 +8,21 @@
 		output = "",
 		exec = require("child_process").exec;
     
-    function runDocco(file, output) {
-		
-		
-		var cmd = 'docco ' + file.fullPath + ' -o ' + output.fullPath + 'docs/',
+    function runDocco(srcFullPath, outputFullPath) {
+				
+		var cmd = 'docco ' + srcFullPath + ' -o ' + outputFullPath + 'docs/',
 			docco = exec(cmd);
 		
 		console.log("Running Docco, please wait...");
         console.log(cmd);
         
 		docco.stdout.on('data', function (data) {
-			output += data;
 		});
 		
 		docco.stderr.on('data', function (data) {
-			console.error('stderr: ' + data);
 		});
 		
 		docco.on('close', function (code) {
-			domainManager.emitEvent("docco", "complete", [output]);
 		});
     }
     
